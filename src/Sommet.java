@@ -14,4 +14,9 @@ public class Sommet {
     public String getNom() {
         return nom;
     }
+
+    @Override
+    public String toString() {
+        return "Sommet " + id + "," nom +;
+    }
 }
