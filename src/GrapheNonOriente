@@ -1,11 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util;
 
 public class GrapheNonOriente extends Graphe {
 
     @Override
     public List<Sommet> getVoisins(Sommet s) {
         List<Sommet> voisins = new ArrayList<>();
+
+        //on regarde tous les sommets accessibles depuis s
 
         for (Arete a : aretes) {
 
@@ -29,6 +30,8 @@ public class GrapheNonOriente extends Graphe {
     @Override
     public List<Arete> getAretesSortantes(Sommet s) {
         List<Arete> sorties = new ArrayList<>();
+
+        //on liste toutes les arêtes qui partent de s, uniquement dans le sens autorise
 
         for (Arete a : aretes) {
 
