@@ -26,6 +26,7 @@ public abstract class Graphe {
     }
 
     public abstract List<Sommet> getVoisins(Sommet s);
+
     public abstract List<Arete> getAretesSortantes(Sommet s);
 
     @Override
