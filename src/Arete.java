@@ -13,6 +13,10 @@ public class Arete {
         this.oriente = oriente;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Sommet getSommetDepart(){
         return sommetDepart;
     }
