@@ -18,7 +18,7 @@ public class GrapheMixte extends Graphe {
                 if (a.getSommetDepart().getId() == s.getId()) {
                     voisins.add(a.getSommetArrivee());
                 }
-            }
+            } 
 
             // pour arête non orientée (double sens)
             else {
