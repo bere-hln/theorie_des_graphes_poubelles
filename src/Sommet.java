@@ -4,10 +4,11 @@ public class Sommet {
     //thème 3
     private int quantite = 0;
     private int couleur = -1;
-
+    private List<Arete> aretes;
     public Sommet(int id, String nom) {
         this.id = id;
         this.nom = nom;
+        this.aretes = new ArrayList<>();
 
     }
 
