@@ -42,9 +42,9 @@ public class Arete {
 
 
 
-    @Override
-    public String toString() {
-        return "Arete " + id + " : " + source.getNom() + " -> " + destination.getNom()
-                + " (" + distance + "m, orientée=" + oriente + ")";
+    //@Override
+    //public String toString() {
+        //return "Arete " + id + " : " + source.getNom() + " -> " + destination.getNom()
+               // + " (" + distance + "m, orientée=" + oriente + ")";
     }
-}
+
