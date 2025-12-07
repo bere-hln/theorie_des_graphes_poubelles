@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Sommet {
     private int  id;
     private String nom;
@@ -6,7 +7,7 @@ public class Sommet {
     //thème 3
     private int quantite = 0;
     private int couleur = -1;
-    private List<Arete> aretes;
+    private ArrayList<Arete> aretes;
 
     // contructeurs
     public Sommet(int id, String nom, double latitude, double longiutde){
@@ -14,7 +15,8 @@ public class Sommet {
         this.nom = nom;
         this.latitude = latitude;
         this.longitude = longitude;
-          this.aretes = new ArrayList<>();}
+        this.aretes = new ArrayList<>();
+    }
 
 //guetters
     public int getId() {
@@ -41,6 +43,6 @@ public class Sommet {
 
     @Override
     public String toString() {
-        return "Sommet " + id + "," nom +;
+        return "Sommet " + id + "," + nom;
     }
 }
