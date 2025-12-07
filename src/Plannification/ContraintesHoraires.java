@@ -33,7 +33,7 @@ public class ContraintesHoraires {
 
     //methode pour accéder aux propriété de notre rue
     public boolean ruePraticable(){
-        return rue.estPraticable;
+        return rue.isPraticable();
     }
 }
 

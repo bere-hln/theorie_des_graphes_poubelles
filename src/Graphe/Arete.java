@@ -37,7 +37,7 @@ public class Arete {
         return oriente;
     }
 
-    public boolean estPraticable()
+    public boolean isPraticable()
     { return praticable;}
 
     @Override
