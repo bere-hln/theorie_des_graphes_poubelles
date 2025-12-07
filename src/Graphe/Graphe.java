@@ -13,7 +13,6 @@ public abstract class Graphe {
 
     public void ajouterSommet(Sommet s){
         sommets.add(s);
-        sommets.add(s);
     }
 
     public void ajouterArete(Arete a) {
