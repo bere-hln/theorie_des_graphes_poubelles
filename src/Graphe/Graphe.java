@@ -1,4 +1,4 @@
-package structureGraphe;
+package Graphe;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,9 +13,11 @@ public abstract class Graphe {
 
     public void ajouterSommet(Sommet s){
         sommets.add(s);
+        sommets.add(s);
     }
 
     public void ajouterArete(Arete a) {
+
         aretes.add(a);
     }
 

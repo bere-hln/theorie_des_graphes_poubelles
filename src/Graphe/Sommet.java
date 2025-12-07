@@ -1,7 +1,13 @@
-package structureGraphe;
+
+package Graphe;
 import java.util.ArrayList;
+
+import java.util.List;
+import java.util.ArrayList;
+
+
 public class Sommet {
-    private int  id;
+    private int id;
     private String nom;
     private double latitude;
     private double longitude;
@@ -11,7 +17,7 @@ public class Sommet {
     private ArrayList<Arete> aretes;
 
     // contructeurs
-    public Sommet(int id, String nom, double latitude, double longiutde){
+    public Sommet(int id, String nom, double latitude, double longitude) {
         this.id = id;
         this.nom = nom;
         this.latitude = latitude;
@@ -19,31 +25,42 @@ public class Sommet {
         this.aretes = new ArrayList<>();
     }
 
-//guetters
+    //guetters
     public int getId() {
         return id;
     }
+
     public String getNom() {
         return nom;
     }
-    public double getLatitude(){
+
+    public double getLatitude() {
         return latitude;
     }
-    public double getLongitude(){
+
+    public double getLongitude() {
         return longitude;
     }
 
     //thème 3
-    public int getQuantite() {return quantite;}
+    public int getQuantite() {
+        return quantite;
+    }
 
-    public void setQuantite(int q) {this.quantite = q;}
+    public void setQuantite(int q) {
+        this.quantite = q;
+    }
 
-    public int getCouleur() {return couleur;}
+    public int getCouleur() {
+        return couleur;
+    }
 
-    public void setCouleur(int couleur) {this.couleur = couleur;}
+    public void setCouleur(int couleur) {
+        this.couleur = couleur;
+    }
 
     @Override
     public String toString() {
-        return "Sommet " + id + "," + nom;
+        return "Sommet " + id + " : " + nom;
     }
 }

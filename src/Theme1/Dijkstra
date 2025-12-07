@@ -1,0 +1,89 @@
+package Theme1;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Dijkstra {
+
+    private int[] distance;
+    private int[] precedent;
+    private boolean[] visite;
+
+    public void appliquer(Graphe g, Sommet source) {
+
+        int n = g.getSommets().size();
+
+        distance = new int[n];
+        precedent = new int[n];
+        visite = new boolean[n];
+
+        // Initialisation
+        for (int i = 0; i < n; i++) {
+            distance[i] = Integer.MAX_VALUE; // c'est l'équivalent de infni
+            precedent[i] = -1;
+            visite[i] = false;
+        }
+
+        distance[source.getId()] = 0;
+
+        // Boucle principale
+        for (int i = 0; i < n; i++) {
+
+            // Trouver le sommet non visité le plus proche
+            int courant = -1;
+            int distMin = Integer.MAX_VALUE;
+
+            for (int j = 0; j < n; j++) {
+                if (!visite[j] && distance[j] < distMin) {
+                    distMin = distance[j];
+                    courant = j;
+                }
+            }
+
+            if (courant == -1) break; // plus aucun sommet accessible
+
+            visite[courant] = true;
+            Sommet sCourant = g.getSommets().get(courant);
+
+            // Mettre à jour les voisins
+            for (Arete a : g.getAretesSortantes(sCourant)) {
+
+                Sommet voisin;
+
+                // Trouver le bon voisin
+                if (a.getSommetDepart().getId() == courant) {
+                    voisin = a.getSommetArrivee();
+                } else {
+                    voisin = a.getSommetDepart();
+                }
+
+                int idVoisin = voisin.getId();
+
+                int nouvelleDistance = distance[courant] + a.getDistance();
+
+                if (nouvelleDistance < distance[idVoisin]) {
+                    distance[idVoisin] = nouvelleDistance;
+                    precedent[idVoisin] = courant;
+                }
+            }
+        }
+    }
+
+    // Reconstruire le chemin
+    public List<Sommet> cheminVers(Graphe g, Sommet arrivee) {
+
+        List<Sommet> chemin = new ArrayList<>();
+
+        int id = arrivee.getId();
+
+        while (id != -1) {
+            chemin.add(0, g.getSommets().get(id));
+            id = precedent[id];
+        }
+
+        return chemin;
+    }
+
+    public int getDistance(Sommet s) {
+        return distance[s.getId()];
+    }
+}
