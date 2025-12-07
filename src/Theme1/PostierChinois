@@ -1,0 +1,148 @@
+package Theme1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PostierChinois {
+
+
+//trouver les sommets impairs
+    public static List<Sommet> sommetsImpairs(GrapheNonOriente g) {
+
+        List<Sommet> impairs = new ArrayList<>();
+
+        for (Sommet s : g.getSommets()) {
+
+            int degre = 0;
+
+            for (Arete a : g.getAretes()) {
+                if (a.getSommetDepart() == s || a.getSommetArrivee() == s)
+                    degre++;
+            }
+
+            if (degre % 2 != 0)
+                impairs.add(s);
+        }
+
+        return impairs;
+    }
+
+    //généré les paires de sommets impairs
+    private static void genererMatchings(List<Sommet> impairs,
+                                         List<List<Sommet[]>> resultat,
+                                         List<Sommet[]> courant) {
+
+        if (impairs.isEmpty()) {
+            resultat.add(new ArrayList<>(courant));
+            return;
+        }
+
+        Sommet first = impairs.get(0);
+
+        for (int i = 1; i < impairs.size(); i++) {
+
+            Sommet second = impairs.get(i);
+
+            List<Sommet> reste = new ArrayList<>(impairs);
+            reste.remove(first);
+            reste.remove(second);
+
+            courant.add(new Sommet[]{first, second});
+
+            genererMatchings(reste, resultat, courant);
+
+            courant.remove(courant.size() - 1);
+        }
+    }
+
+    //calculer les couts totaux des paires
+    private static int coutMatching(GrapheNonOriente g, List<Sommet[]> matching) {
+
+        int total = 0;
+
+        Dijkstra dj = new Dijkstra();
+
+        for (Sommet[] paire : matching) {
+            Sommet A = paire[0];
+            Sommet B = paire[1];
+
+            dj.appliquer(g, A);
+            total += dj.getDistance(B); // plus court chemin A → B
+        }
+
+        return total;
+    }
+
+   //dupliquer les arretes du chemin
+    private static void dupliquerPaires(GrapheNonOriente g, List<Sommet[]> matching) {
+
+        Dijkstra dj = new Dijkstra();
+
+        for (Sommet[] paire : matching) {
+
+            Sommet A = paire[0];
+            Sommet B = paire[1];
+
+            dj.appliquer(g, A);
+
+            List<Sommet> chemin = dj.cheminVers(g, B);
+
+            for (int i = 0; i < chemin.size() - 1; i++) {
+
+                Sommet X = chemin.get(i);
+                Sommet Y = chemin.get(i + 1);
+
+                // récupérer la vraie distance entre X et Y
+                for (Arete a : g.getAretes()) {
+                    if ((a.getSommetDepart() == X && a.getSommetArrivee() == Y) ||
+                            (a.getSommetDepart() == Y && a.getSommetArrivee() == X)) {
+
+                        g.ajouterArete(new Arete(
+                                g.getAretes().size(),
+                                X,
+                                Y,
+                                a.getDistance(),
+                                false
+                        ));
+
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    //fonction principale
+    public static List<Sommet> resoudre(GrapheNonOriente g, Sommet depart) {
+
+        List<Sommet> impairs = sommetsImpairs(g);
+
+        if (impairs.size() < 4 || impairs.size() % 2 != 0) {
+            System.out.println("Ce n'est pas un cas 3 !");
+            return null;
+        }
+
+        // Toutes les paires possibles
+        List<List<Sommet[]>> matchings = new ArrayList<>();
+        genererMatchings(impairs, matchings, new ArrayList<>());
+
+        // On garde la meilleur
+        int meilleurCout = Integer.MAX_VALUE;
+        List<Sommet[]> meilleurMatching = null;
+
+        for (List<Sommet[]> m : matchings) {
+            int c = coutMatching(g, m);
+            if (c < meilleurCout) {
+                meilleurCout = c;
+                meilleurMatching = m;
+            }
+        }
+
+        // dupliquer les arêtes de ces paires
+        dupliquerPaires(g, meilleurMatching);
+
+        // dMaintenant le graphe est eulérien/Fleury
+        Fleury f = new Fleury();
+        return f.fleury(g, depart);
+    }
+}

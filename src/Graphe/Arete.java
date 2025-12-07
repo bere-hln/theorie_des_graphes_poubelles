@@ -38,6 +38,6 @@ public class Arete {
     @Override
     public String toString() {
         return "Arete " + id + " : " + sommetDepart.getNom() + " -> " + sommetArrivee.getNom()
-                + " (" + distance + "m, orientée=" + oriene + ")";
+                + " (" + distance + "m, orientée =" + oriente + ")";
     }
 }
