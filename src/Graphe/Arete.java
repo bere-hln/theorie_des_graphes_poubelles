@@ -6,13 +6,15 @@ public class Arete {
     private Sommet sommetArrivee;
     private int distance;
     private boolean oriente;
+    private boolean praticable; //contraintes travaux theme 3
 
-    public Arete(int id, Sommet sommetDepart, Sommet sommetArrivee, int distance, boolean oriente){
+    public Arete(int id, Sommet sommetDepart, Sommet sommetArrivee, int distance, boolean oriente, boolean praticable){
         this.id = id;
         this.sommetDepart = sommetDepart;
         this.sommetArrivee = sommetArrivee;
         this.distance = distance;
         this.oriente = oriente;
+        this.praticable = praticable;
     }
 
     public int getId() {
@@ -34,6 +36,9 @@ public class Arete {
     public boolean estOriente() {
         return oriente;
     }
+
+    public boolean estPraticable()
+    { return praticable;}
 
     @Override
     public String toString() {
