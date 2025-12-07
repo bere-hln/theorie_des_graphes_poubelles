@@ -1,4 +1,5 @@
 package user;
+import Graphe.Graphe;
 
 import menu.MenuCollectivité;
 

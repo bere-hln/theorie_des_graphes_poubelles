@@ -22,6 +22,10 @@ public abstract class Utilisateur {
         return nom;
     }
 
+    public boolean verifierMotDePasse(String mdp) {
+        return this.motdepasse.equals(mdp);
+    }
+
     //méthode abstraite pour avoir des menus différents pour chaque type d'utilisateur
     public abstract void afficherMenu();
 }

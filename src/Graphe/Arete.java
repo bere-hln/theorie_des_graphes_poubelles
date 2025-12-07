@@ -40,6 +40,11 @@ public class Arete {
     public boolean isPraticable()
     { return praticable;}
 
+    public boolean setPraticable(boolean praticable) {
+        this.praticable = praticable;
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Arete " + id + " : " + sommetDepart.getNom() + " -> " + sommetArrivee.getNom()
