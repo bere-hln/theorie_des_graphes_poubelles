@@ -5,7 +5,7 @@ public class Arete {
     private int distance;
     private boolean oriente;
 
-    public Arete(int id){
+    public Arete(int id, Sommet sommetDepart, Sommet sommetArrivee, int distance, boolean oriente){
         this.id = id;
         this.sommetDepart = sommetDepart;
         this.sommetArrivee = sommetArrivee;
