@@ -1,0 +1,51 @@
+import java.util;
+
+public class GrapheNonOriente extends Graphe {
+
+    @Override
+    public List<Sommet> getVoisins(Sommet s) {
+        List<Sommet> voisins = new ArrayList<>();
+
+        //on regarde tous les sommets accessibles depuis s
+
+        for (Arete a : aretes) {
+
+            // si on a une arête non orientée
+            if (!a.estOrientee()) {
+
+                // si s est le sommet de départ
+                if (a.getSommetDepart().getId() == s.getId()) {
+                    voisins.add(a.getSommetArrivee());
+                }
+                // si s est le sommet d'arrivée
+                else if (a.getSommetArrivee().getId() == s.getId()) {
+                    voisins.add(a.getSommetDepart());
+                }
+            }
+        }
+
+        return voisins;
+    }
+
+    @Override
+    public List<Arete> getAretesSortantes(Sommet s) {
+        List<Arete> sorties = new ArrayList<>();
+
+        //on liste toutes les arêtes qui partent de s, uniquement dans le sens autorise
+
+        for (Arete a : aretes) {
+
+            // si arrete oriente
+            if (!a.estOrientee()) {
+
+                if (a.getSource().getId() == s.getId() ||
+                        a.getDestination().getId() == s.getId()) {
+
+                    sorties.add(a);
+                }
+            }
+        }
+
+        return sorties;
+    }
+}
