@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class FFD {
+
+    public static List<List<Sommet>> appliquerFFD(List<Sommet> secteurs, int capacite) {
+
+        // 1. Tri décroissant selon quantités
+        secteurs.sort((s1, s2) ->
+                Integer.compare(s2.getQuantite(), s1.getQuantite())
+        );
+
+        List<List<Sommet>> tours = new ArrayList<>();
+        List<Integer> charges = new ArrayList<>();
+
+        for (Sommet s : secteurs) {
+            boolean place = false;
+
+            // Première tournée où ça rentre
+            for (int i = 0; i < tours.size(); i++) {
+                if (charges.get(i) + s.getQuantite() <= capacite) {
+                    tours.get(i).add(s);
+                    charges.set(i, charges.get(i) + s.getQuantite());
+                    place = true;
+                    break;
+                }
+            }
+
+            // Sinon → nouvelle tournée
+            if (!place) {
+                List<Sommet> t = new ArrayList<>();
+                t.add(s);
+                tours.add(t);
+                charges.add(s.getQuantite());
+            }
+        }
+
+        return tours;
+    }
+}

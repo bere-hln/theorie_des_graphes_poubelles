@@ -1,0 +1,62 @@
+import java.util.List;
+import java.util.ArrayList;
+
+
+public class GrapheMixte extends Graphe {
+
+    @Override
+    public List<Sommet> getVoisins(Sommet s) {
+        List<Sommet> voisins = new ArrayList<>();
+        //on regarde tous les sommets accessibles depuis s
+
+        for (Arete a : aretes) {
+
+            // pour arête orientée (sens unique)
+            if (a.estOrientee()) {
+
+                // On ne peut aller que de depart vers arrivee
+                if (a.getSommetDepart().getId() == s.getId()) {
+                    voisins.add(a.getSommetArrivee());
+                }
+            } 
+
+            // pour arête non orientée (double sens)
+            else {
+
+                if (a.getSommetDepart().getId() == s.getId()) {
+                    voisins.add(a.getSommetArrivee());
+                }
+                else if (a.getSommetArrivee().getId() == s.getId()) {
+                    voisins.add(a.getSommetDepart());
+                }
+            }
+        }
+
+        return voisins;
+    }
+
+    @Override
+    public List<Arete> getAretesSortantes(Sommet s) {
+        List<Arete> sorties = new ArrayList<>();
+
+        for (Arete a : aretes) {
+
+            // pour arête orientée
+            if (a.estOrientee()) {
+                if (a.getSommetDepart().getId() == s.getId()) {
+                    sorties.add(a);
+                }
+            }
+
+            // pour arête non orientée
+            else {
+                if (a.getSommetDepart).getId() == s.getId() ||
+                        a.getSommetArrivee().getId() == s.getId()) {
+                    sorties.add(a);
+                }
+            }
+        }
+
+        return sorties;
+    }
+}
