@@ -1,0 +1,88 @@
+package Theme1;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Fleury {
+
+    // Vérifie si une arête est un pont (supprimer a coupe le graphe)
+    private boolean estUnPont(GrapheNonOriente g, Arete a, Sommet courant) {
+
+        // 1. Compter les sommets atteignables avant suppression
+        int avant = compterAtteignables(g, courant);
+
+        // 2. Supprimer temporairement l'arête
+        g.getAretes().remove(a);
+
+        // 3. Recompter
+        int apres = compterAtteignables(g, courant);
+
+        // 4. Réinsérer l'arête
+        g.getAretes().add(a);
+
+        // Si le nombre diminue → c’est un pont
+        return apres < avant;
+    }
+
+    // BFS simple pour compter sommets atteignables
+    private int compterAtteignables(GrapheNonOriente g, Sommet s) {
+        List<Sommet> file = new ArrayList<>();
+        List<Sommet> visite = new ArrayList<>();
+
+        file.add(s);
+
+        while (!file.isEmpty()) {
+            Sommet actuel = file.remove(0);
+            if (!visite.contains(actuel)) {
+                visite.add(actuel);
+                file.addAll(g.getVoisins(actuel));
+            }
+        }
+
+        return visite.size();
+    }
+
+    // Algorithme de Fleury pour chemin eulérien
+    public List<Sommet> fleury(GrapheNonOriente g, Sommet depart) {
+
+        List<Sommet> chemin = new ArrayList<>();
+        Sommet courant = depart;
+
+        while (true) {
+            chemin.add(courant);
+
+            // Lister arêtes restantes depuis ce sommet
+            List<Arete> candidates = new ArrayList<>();
+            for (Arete a : g.getAretes()) {
+                if (a.getSommetDepart() == courant || a.getSommetArrivee() == courant) {
+                    candidates.add(a);
+                }
+            }
+
+            if (candidates.isEmpty()) break;  // Fin
+
+            Arete choix = null;
+
+            // 1 : choisir une arête NON pont si possible
+            for (Arete a : candidates) {
+                if (!estUnPont(g, a, courant)) {
+                    choix = a;
+                    break;
+                }
+            }
+
+            // 2 : si toutes sont des ponts → on prend la première
+            if (choix == null) choix = candidates.get(0);
+
+            // supprimer l’arête choisie
+            g.getAretes().remove(choix);
+
+            // aller au sommet suivant
+            if (choix.getSommetDepart() == courant)
+                courant = choix.getSommetArrivee();
+            else
+                courant = choix.getSommetDepart();
+        }
+
+        return chemin;
+    }
+}

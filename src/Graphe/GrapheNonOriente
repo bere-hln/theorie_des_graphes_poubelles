@@ -1,31 +1,25 @@
-import java.util.List;
+package Graphe;
 import java.util.ArrayList;
+import java.util.List;
 
-
-public class GrapheMixte extends Graphe {
+public class GrapheNonOriente extends Graphe {
 
     @Override
     public List<Sommet> getVoisins(Sommet s) {
         List<Sommet> voisins = new ArrayList<>();
+
         //on regarde tous les sommets accessibles depuis s
 
         for (Arete a : aretes) {
 
-            // pour arête orientée (sens unique)
-            if (a.estOriente()) {
+            // si on a une arête non orientée
+            if (!a.estOriente()) {
 
-                // On ne peut aller que de depart vers arrivee
+                // si s est le sommet de départ
                 if (a.getSommetDepart().getId() == s.getId()) {
                     voisins.add(a.getSommetArrivee());
                 }
-            } 
-
-            // pour arête non orientée (double sens)
-            else {
-
-                if (a.getSommetDepart().getId() == s.getId()) {
-                    voisins.add(a.getSommetArrivee());
-                }
+                // si s est le sommet d'arrivée
                 else if (a.getSommetArrivee().getId() == s.getId()) {
                     voisins.add(a.getSommetDepart());
                 }
@@ -39,19 +33,16 @@ public class GrapheMixte extends Graphe {
     public List<Arete> getAretesSortantes(Sommet s) {
         List<Arete> sorties = new ArrayList<>();
 
+        //on liste toutes les arêtes qui partent de s, uniquement dans le sens autorise
+
         for (Arete a : aretes) {
 
-            // pour arête orientée
-            if (a.estOriente()) {
-                if (a.getSommetDepart().getId() == s.getId()) {
-                    sorties.add(a);
-                }
-            }
+            // si arrete oriente
+            if (!a.estOriente()) {
 
-            // pour arête non orientée
-            else {
                 if (a.getSommetDepart().getId() == s.getId() ||
                         a.getSommetArrivee().getId() == s.getId()) {
+
                     sorties.add(a);
                 }
             }

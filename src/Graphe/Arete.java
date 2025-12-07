@@ -1,3 +1,5 @@
+package Graphe;
+
 public class Arete {
     private int id;
     private Sommet sommetDepart;
@@ -36,6 +38,6 @@ public class Arete {
     @Override
     public String toString() {
         return "Arete " + id + " : " + sommetDepart.getNom() + " -> " + sommetArrivee.getNom()
-                + " (" + distance + "m, orientée=" + oriente + ")";
+                + " (" + distance + "m, orientée=" + oriene + ")";
     }
 }
