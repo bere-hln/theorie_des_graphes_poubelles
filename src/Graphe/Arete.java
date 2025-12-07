@@ -2,7 +2,7 @@
 package Graphe;
 import java.util.ArrayList;
 
-public class Arete {
+public abstract class Arete {
     private int id;
     private Sommet sommetDepart;
     private Sommet sommetArrivee;
