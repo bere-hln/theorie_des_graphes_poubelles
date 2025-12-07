@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class DijkstraPermutation {
+
+    private Dijkstra dijkstra = new Dijkstra();
+
+    // Fonction principale
+    public ResultatTSP calculer(Graphe g, Sommet depot, List<Sommet> particuliers) {
+
+        int k = particuliers.size();
+
+        // calcul des distances entre tous les sommets utiles
+        int[][] dist = new int[k + 1][k + 1]; // 0 = dépôt, 1..k = particuliers
+
+        // Distance dépôt/particuliers
+        dijkstra.appliquer(g, depot);
+        for (int i = 0; i < k; i++) {
+            dist[0][i + 1] = dijkstra.getDistance(particuliers.get(i));
+        }
+
+        // Distance particuliers/ autres particuliers
+        for (int i = 0; i < k; i++) {
+            dijkstra.appliquer(g, particuliers.get(i));
+            for (int j = 0; j < k; j++) {
+                dist[i + 1][j + 1] = dijkstra.getDistance(particuliers.get(j));
+            }
+        }
+
+        // Génération des permutations
+        List<int[]> permutations = new ArrayList<>();
+        genererPermutations(k, new boolean[k], new int[k], 0, permutations);
+
+        // Test de chaque permutation
+        int meilleureDistance = Integer.MAX_VALUE;
+        int[] meilleurOrdre = null;
+
+        for (int[] perm : permutations) {
+            int total = 0;
+
+            // distance dépôt/premier point
+            total += dist[0][perm[0] + 1];
+
+            // distances entre les points de la permutation
+            for (int i = 0; i < k - 1; i++) {
+                total += dist[perm[i] + 1][perm[i + 1] + 1];
+            }
+
+            // retour dépôt
+            total += dist[perm[k - 1] + 1][0];
+
+            if (total < meilleureDistance) {
+                meilleureDistance = total;
+                meilleurOrdre = perm.clone();
+            }
+        }
+
+        return new ResultatTSP(meilleureDistance, meilleurOrdre);
+    }
+
+    // Génération des permutations
+    private void genererPermutations(int k, boolean[] used, int[] perm, int index, List<int[]> resultat) {
+        if (index == k) {
+            resultat.add(perm.clone());
+            return;
+        }
+
+        for (int i = 0; i < k; i++) {
+            if (!used[i]) {
+                used[i] = true;
+                perm[index] = i;
+                genererPermutations(k, used, perm, index + 1, resultat);
+                used[i] = false;
+            }
+        }
+    }
+
+    // résultat
+    public static class ResultatTSP {
+        public int distance;
+        public int[] ordre;
+
+        public ResultatTSP(int distance, int[] ordre) {
+            this.distance = distance;
+            this.ordre = ordre;
+        }
+    }
+}
