@@ -1,12 +1,13 @@
 package Graphe;
 
-public class Habitations {
+public class Habitations extends Sommet {
     private int numero;
     private Arete rue;
     private int positionSurRue;
 
     //Constructeurs
-    public Habitations(int numero, Arete rue, int positionSurRue) {
+    public Habitations(int id, String nom, double latitude, double longitude, int numero, Arete rue, int positionSurRue) {
+        super(id, nom, latitude, longitude);
         this.numero = numero;
         this.rue = rue;
         this.positionSurRue = positionSurRue;

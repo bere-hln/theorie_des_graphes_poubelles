@@ -7,12 +7,11 @@ import java.util.ArrayList;
 
 
 public class Sommet {
-    private int id;
-    private String nom;
-    private double latitude;
-    private double longitude;
+    protected int id;
+    protected String nom;
+    protected double latitude;
+    protected double longitude;
     //thème 3
-    private int quantite = 0;
     private int couleur = -1;
     private ArrayList<Arete> aretes;
 
@@ -43,13 +42,6 @@ public class Sommet {
     }
 
     //thème 3
-    public int getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(int q) {
-        this.quantite = q;
-    }
 
     public int getCouleur() {
         return couleur;
