@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+public class Hierholzer {
+
+    public List<Sommet> trouverCycleEulerien(GrapheNonOriente g, Sommet depart) {
+
+        // Copie des arêtes pour ne pas modifier le graphe original
+        List<Arete> ar = new ArrayList<>(g.getAretes());
+
+        Stack<Sommet> pile = new Stack<>();
+        List<Sommet> cheminFinal = new ArrayList<>();
+
+        Sommet courant = depart;
+        pile.push(courant);
+
+        while (!pile.isEmpty()) {
+
+            // Chercher une arête disponible depuis le sommet courant
+            Arete a = chercherAreteNonUtilisee(courant, ar);
+
+            // Si aucune arête dispo on ajoute au chemin final
+            if (a == null) {
+                cheminFinal.add(courant);
+                courant = pile.pop();
+            }
+
+            // Sinon on suit l’arête
+            else {
+                pile.push(courant);
+                Sommet suivant;
+
+                if (a.getSommetDepart() == courant)
+                    suivant = a.getSommetArrivee();
+                else
+                    suivant = a.getSommetDepart();
+
+                // supprimer l’arête utilisée
+                ar.remove(a);
+
+                courant = suivant;
+            }
+        }
+
+        return cheminFinal;
+    }
+
+    // Cherche une arête encore disponible depuis un sommet
+    private Arete chercherAreteNonUtilisee(Sommet s, List<Arete> aretes) {
+
+        for (Arete a : aretes) {
+            if (a.getSommetDepart() == s || a.getSommetArrivee() == s) {
+                return a;
+            }
+        }
+
+        return null;
+    }
+}
