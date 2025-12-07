@@ -31,9 +31,20 @@ public class ContraintesHoraires {
     }
 
 
-    //methode pour accéder aux propriété de notre rue
+    //methode pour accéder aux propriété(travaux) de nos rues
     public boolean ruePraticable(){
         return rue.isPraticable();
+    }
+
+    //methode2 pour accéder aux propriété(horaires) de notre rue
+    public boolean estActiveA(LocalTime heure) {
+        return !heure.isBefore(heureDebut) && !heure.isAfter(heureFin);
+    }
+
+    @Override
+    public String toString() {
+        return "Contrainte sur " + rue + " de " + heureDebut + " à " + heureFin +
+                " (Raison: " + raison + ")";
     }
 }
 
