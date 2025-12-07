@@ -1,4 +1,5 @@
-import java.util;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GrapheNonOriente extends Graphe {
 
@@ -11,7 +12,7 @@ public class GrapheNonOriente extends Graphe {
         for (Arete a : aretes) {
 
             // si on a une arête non orientée
-            if (!a.estOrientee()) {
+            if (!a.estOriente()) {
 
                 // si s est le sommet de départ
                 if (a.getSommetDepart().getId() == s.getId()) {
@@ -36,10 +37,10 @@ public class GrapheNonOriente extends Graphe {
         for (Arete a : aretes) {
 
             // si arrete oriente
-            if (!a.estOrientee()) {
+            if (!a.estOriente()) {
 
-                if (a.getSource().getId() == s.getId() ||
-                        a.getDestination().getId() == s.getId()) {
+                if (a.getSommetDepart().getId() == s.getId() ||
+                        a.getSommetArrivee().getId() == s.getId()) {
 
                     sorties.add(a);
                 }
