@@ -1,23 +1,33 @@
 public class Sommet {
     private int  id;
     private String nom;
+    private double latitude;
+    private double longitude;
     //thème 3
     private int quantite = 0;
     private int couleur = -1;
     private List<Arete> aretes;
-    public Sommet(int id, String nom) {
+
+    // contructeurs
+    public Sommet(int id, String nom, double latitude, double longiutde){
         this.id = id;
         this.nom = nom;
-        this.aretes = new ArrayList<>();
+        this.latitude = latitude;
+        this.longitude = longitude;
+          this.aretes = new ArrayList<>();}
 
-    }
-
+//guetters
     public int getId() {
         return id;
     }
-
     public String getNom() {
         return nom;
+    }
+    public double getLatitude(){
+        return latitude;
+    }
+    public double getLongitude(){
+        return longitude;
     }
 
     //thème 3
