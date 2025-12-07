@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class LecteurGraphe {
+
+    public static Graphe lireFichier(String chemin, Graphe graphe) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(chemin))) {
+
+            String ligne;
+            boolean lectureSommets = false;
+            boolean lectureAretes = false;
+
+            while ((ligne = br.readLine()) != null) {
+
+                ligne = ligne.trim();
+
+                if (ligne.isEmpty()) continue;
+
+                if (ligne.equalsIgnoreCase("#sommets")) {
+                    lectureSommets = true;
+                    lectureAretes = false;
+                    continue;
+                }
+
+                if (ligne.equalsIgnoreCase("#aretes")) {
+                    lectureAretes = true;
+                    lectureSommets = false;
+                    continue;
+                }
+
+                // Lecture des sommets
+                if (lectureSommets) {
+                    String nom = ligne;
+                    Sommet s = new Sommet(graphe.getSommets().size(), nom, 0, 0);
+                    graphe.ajouterSommet(s);
+                }
+
+                // Lecture des arêtes
+                else if (lectureAretes) {
+
+                    String[] t = ligne.split(" ");
+                    String nomA = t[0];
+                    String nomB = t[1];
+                    int distance = Integer.parseInt(t[2]);
+                    String type = t[3];
+
+                    Sommet A = chercherSommet(nomA, graphe);
+                    Sommet B = chercherSommet(nomB, graphe);
+
+                    boolean oriente = type.startsWith("ORIENTEE");
+
+                    Arete a = new Arete(graphe.getAretes().size(), A, B, distance, oriente);
+
+                    graphe.ajouterArete(a);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return graphe;
+    }
+
+    private static Sommet chercherSommet(String nom, Graphe g) {
+        for (Sommet s : g.getSommets()) {
+            if (s.getNom().equals(nom)) return s;
+        }
+        return null;
+    }
+}
