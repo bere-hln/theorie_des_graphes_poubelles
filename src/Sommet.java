@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Sommet {
     private int  id;
     private String nom;
@@ -9,7 +12,7 @@ public class Sommet {
     private List<Arete> aretes;
 
     // contructeurs
-    public Sommet(int id, String nom, double latitude, double longiutde){
+    public Sommet(int id, String nom, double latitude, double longitude){
         this.id = id;
         this.nom = nom;
         this.latitude = latitude;
@@ -41,6 +44,6 @@ public class Sommet {
 
     @Override
     public String toString() {
-        return "Sommet " + id + "," nom +;
+        return "Sommet " + id +" : " + nom;
     }
 }
